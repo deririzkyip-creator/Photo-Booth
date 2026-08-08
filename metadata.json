@@ -1,0 +1,10 @@
+{
+  "name": "Asha Sadhana Photo Booth",
+  "description": "High-energy neon photobooth experience with custom frames, live camera capture, filters, and photo strip exporter.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
