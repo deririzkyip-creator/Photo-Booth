@@ -17,6 +17,8 @@ export interface FrameOption {
   sampleImg?: string;
   overlayStyle: string;
   decorations?: string[]; // E.g. cute emojis or symbols for decorative rendering
+  defaultTitle?: string; // Default for the editable title input (overrides headerText)
+  defaultLocation?: string; // Default for the editable location input
 }
 
 export interface PhotoSession {

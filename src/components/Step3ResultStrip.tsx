@@ -22,8 +22,8 @@ export const Step3ResultStrip: React.FC<Step3ResultStripProps> = ({
   onSaveToGallery,
   onOpenShare,
 }) => {
-  const [customTitle, setCustomTitle] = useState<string>(frame.headerText || 'ASHA SADHANA MEMORIES');
-  const [customLocation, setCustomLocation] = useState<string>('JAKARTA • AUG 2026');
+  const [customTitle, setCustomTitle] = useState<string>(frame.defaultTitle || frame.headerText || 'ASHA SADHANA MEMORIES');
+  const [customLocation, setCustomLocation] = useState<string>(frame.defaultLocation || 'JAKARTA • AUG 2026');
   const [renderedCanvasUrl, setRenderedCanvasUrl] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState<boolean>(true);
   const [isSaved, setIsSaved] = useState<boolean>(false);
@@ -171,10 +171,109 @@ export const Step3ResultStrip: React.FC<Step3ResultStripProps> = ({
             <div 
               className={`w-64 p-4 rounded-xl flex flex-col items-center gap-3 shadow-2xl transition-all duration-300 bg-gradient-to-b ${frame.bgGradient} border border-white/10`}
             >
+              {frame.overlayStyle === 'newspaper' ? (
+                <>
+                  {/* Newspaper Eyebrow */}
+                  <div className="text-center w-full pt-1">
+                    <span 
+                      className="font-serif text-[8px] font-semibold uppercase tracking-[0.3em] block"
+                      style={{ color: frame.textColor }}
+                    >
+                      {frame.footerText}
+                    </span>
+                  </div>
+
+                  {/* Newspaper Masthead DAILY */}
+                  <div className="text-center w-full border-y-2 border-[#3d2b1c] py-1">
+                    <span 
+                      className="font-serif text-3xl font-black uppercase leading-tight block truncate"
+                      style={{ color: frame.textColor }}
+                    >
+                      {frame.headerText}
+                    </span>
+                  </div>
+
+                  {/* Newspaper Banner (replaces EXTRA!) */}
+                  <div className="w-full bg-[#3d2b1c] text-[#f5ead0] rounded-sm">
+                    <span className="font-serif text-[9px] font-bold uppercase tracking-widest block truncate px-1.5 py-1">
+                      {customTitle}
+                    </span>
+                  </div>
+
+                  {/* LOCAL NEWS headline */}
+                  <div className="text-center w-full">
+                    <span className="font-serif text-[8px] font-bold uppercase block leading-tight" style={{ color: frame.textColor }}>
+                      Local News: Trio Caught In Spontaneous Joy! -
+                    </span>
+                    <span className="font-serif text-[7px] block opacity-80" style={{ color: frame.textColor }}>
+                      Friends gather for memorable snap.
+                    </span>
+                  </div>
+
+                  {/* 3 Photos with cream matte (newspaper columns) */}
+                  <div className="w-full flex flex-col gap-2">
+                    {photos.slice(0, 3).map((photoUrl, idx) => (
+                      <div key={idx}>
+                        <div className="p-1 bg-[#f5ead0] border border-[#3d2b1c]">
+                          <div className="w-full aspect-[4/3] overflow-hidden bg-black/60 relative">
+                            <img 
+                              src={photoUrl} 
+                              alt={`Photo ${idx + 1}`} 
+                              className="w-full h-full object-cover"
+                              style={{ filter: getFilterCss(filter) }}
+                            />
+                            <span className="absolute top-1 left-1 bg-[#3d2b1c] text-[#f5ead0] text-[7px] font-serif font-bold px-1 py-px uppercase">
+                              Shot {String(idx + 1).padStart(2, '0')}
+                            </span>
+                          </div>
+                        </div>
+                        {idx === 0 && (
+                          <div className="text-center w-full pt-1.5 pb-1">
+                            <span className="font-serif text-[8px] font-bold uppercase block" style={{ color: frame.textColor }}>
+                              Headline Stories: Prop Alert! - Crew Spotted Acting Wild!
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* PHOTO BOOTH FUN */}
+                  <div className="text-center w-full border-y border-[#3d2b1c] py-0.5">
+                    <span className="font-serif text-[9px] font-bold uppercase tracking-[0.2em]" style={{ color: frame.textColor }}>
+                      ★ Photo Booth Fun ★
+                    </span>
+                  </div>
+
+                  {/* LIFESTYLE headline */}
+                  <div className="text-center w-full">
+                    <span className="font-serif text-[8px] font-bold uppercase block" style={{ color: frame.textColor }}>
+                      Lifestyle: The Final Pose -
+                    </span>
+                    <span className="font-serif text-[7px] block opacity-80" style={{ color: frame.textColor }}>
+                      Unforgettable memories made!
+                    </span>
+                  </div>
+
+                  {/* Newspaper Footer Info */}
+                  <div className="w-full pt-1">
+                    <div className="w-full border-t-2 border-[#3d2b1c] mt-0.5">
+                      <div className="w-full flex items-center justify-between text-[7px] font-serif font-bold uppercase tracking-wide pt-1 pb-0.5" style={{ color: frame.textColor }}>
+                        <span className="text-center flex-1">Date: 09 Agustus 2026</span>
+                        <span className="w-px h-3 bg-[#3d2b1c]"></span>
+                        <span className="text-center flex-1">Location: {customLocation}</span>
+                        <span className="w-px h-3 bg-[#3d2b1c]"></span>
+                        <span className="text-center flex-1">Shot 01/03</span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
               {/* Strip Header */}
               <div className="text-center w-full pt-1">
                 <span 
-                  className="font-inter font-bold text-xs uppercase tracking-widest block truncate"
+                  className="font-montserrat font-black text-xs uppercase tracking-widest block truncate"
                   style={{ color: frame.textColor }}
                 >
                   {customTitle}
@@ -215,21 +314,20 @@ export const Step3ResultStrip: React.FC<Step3ResultStripProps> = ({
               {/* Strip Footer */}
               <div className="text-center w-full pt-1 pb-1">
                 <span 
-                  className="font-mono font-medium text-[10px] uppercase tracking-wider block opacity-80 truncate mb-1"
+                  className="font-space font-semibold text-[10px] uppercase tracking-wider block opacity-80 truncate mb-1"
                   style={{ color: frame.textColor }}
                 >
                   {customLocation}
                 </span>
 
                 <div className="w-full flex items-center justify-between opacity-70 px-1 pt-1 border-t border-white/10">
-                  <span className="text-[8px] font-mono uppercase" style={{ color: frame.textColor }}>
+                  <span className="text-[8px] font-space uppercase" style={{ color: frame.textColor }}>
                     ASHA SADHANA BOOTH
                   </span>
-                  <div className="w-5 h-5 bg-white/20 p-0.5 rounded flex items-center justify-center">
-                    <span className="material-symbols-outlined text-xs text-white">qr_code_2</span>
-                  </div>
                 </div>
               </div>
+                </>
+              )}
             </div>
           </div>
         </div>

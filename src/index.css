@@ -13,6 +13,9 @@
   .font-jakarta {
     font-family: 'Plus Jakarta Sans', sans-serif;
   }
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  }
 
   /* Bento Grid Card Utilities */
   .bento-card {
